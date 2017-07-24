@@ -1,0 +1,39 @@
+---
+ - name: Install Firewalld
+   yum:
+    name: firewalld
+    state: latest
+
+ - name: Start Firewalld
+   service:
+    name: firewalld
+    state: started
+
+ - name: Enable Firewalld On Boot
+   service:
+    name: firewalld
+    enabled: yes
+
+ - name: Add Custom SSH Port To Firewall
+   firewalld:
+    port: "{{ custom_ssh_port }}/tcp"
+    permanent: true
+    state: enabled
+   notify:
+    - Restart Firewalld
+
+ - name: Add HTTP To Firewall
+   firewalld:
+    service: http
+    permanent: true
+    state: enabled
+   notify:
+    - Restart Firewalld
+
+ - name: Add HTTPS To Firewall
+   firewalld:
+    service: https
+    permanent: true
+    state: enabled
+   notify:
+    - Restart Firewalld
