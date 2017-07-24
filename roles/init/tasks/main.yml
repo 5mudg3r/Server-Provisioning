@@ -1,0 +1,37 @@
+---
+ - name: Upgrade Packages
+   yum: 
+    name: '*'
+    state: latest
+
+ - name: Add EPEL Repository
+   yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+ - name: Install EPEL
+   yum:
+    name: epel-release
+    state: latest
+
+ - name: Install Utilities
+   yum:
+    name: "{{ item }}"
+    state: latest
+   with_items:
+    - expect
+    - git
+    - glances
+    - htop
+    - mlocate
+    - tmux
+    - vim
+    - wget
+
+ - name: Update Database For 'Locate'
+   command: updatedb
+
+ - name: Set Hostname
+   hostname:
+    name: "{{ hostname }}"

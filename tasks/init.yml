@@ -1,8 +1,0 @@
----
- - name: Upgrade Packages
-   yum: 
-    name: '*'
-    state: latest
- - name: Set Hostname
-   hostname:
-    name: "{{ hostname }}"

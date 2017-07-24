@@ -15,19 +15,8 @@
  - name: Main (1)
    hosts: web
    become: yes   
-   # tasks to be run before roles
-   pre_tasks:
-    - include: tasks/init.yml
-   # roles to be run
    roles:
+    - init
     - time
     - ssh
     - firewall
-
- - include: plays/find_port.yml
-
- # - name: Main (2)
- #   hosts: web
- #   become: yes   
- #   roles:
- #    - firewall
