@@ -1,0 +1,6 @@
+[aws]
+< ip address > hostname=instance1
+< ip address > hostname=instance2
+
+[web:children]
+aws

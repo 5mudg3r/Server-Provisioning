@@ -1,0 +1,23 @@
+---
+ - name: Update SSH Config
+   template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+   notify:
+    - Restart SSHD
+ 
+ - name: Check If Selinux Is Enforcing
+   command: sestatus
+   register: selstatus
+   changed_when: false
+
+ - name: Add New SSH Port To Selinux
+   seport:
+    ports: "{{ custom_ssh_port | default('22') }}"
+    proto: tcp
+    setype: ssh_port_t
+    state: present
+   when: '"enabled" in selstatus.stdout'

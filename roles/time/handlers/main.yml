@@ -1,0 +1,5 @@
+---
+ - name: Restart Crond
+   service:
+    name: crond
+    state: restarted

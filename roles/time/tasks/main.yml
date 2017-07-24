@@ -1,0 +1,21 @@
+---
+ - name: Set Timezone (Europe/London)
+   timezone:
+    name: Europe/London
+   notify:
+    - Restart Crond
+
+ - name: Install Ntp
+   yum:
+    name: ntp
+    state: latest
+
+ - name: Start Ntp
+   service:
+    name: ntpd
+    state: started
+
+ - name: Enable Ntp On Boot
+   service:
+    name: ntpd
+    enabled: yes

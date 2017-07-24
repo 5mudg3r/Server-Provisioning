@@ -1,0 +1,26 @@
+#######################################################################################
+# IMPORTANT
+#
+# Running this playbook will disable root login and password-based login to ALL
+# servers in the [web] group and all its children in /etc/ansible/hosts
+#
+# Before running this playbook ensure that you can ssh into a sudo-enabled account
+# using PKA on ALL servers listed above else you will no longer be able to access them
+#
+# You have been warned!
+#######################################################################################
+---
+ - include: plays/find_port.yml
+
+ - name: Main
+   hosts: web
+   become: yes   
+   # tasks to be run before roles
+   pre_tasks:
+    - include: tasks/init.yml
+   # roles to be run
+   roles:
+    - time
+    - ssh
+
+ - include: plays/find_port.yml
