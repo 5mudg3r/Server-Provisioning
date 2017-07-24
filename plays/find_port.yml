@@ -14,11 +14,11 @@
 
     - name: Test Custom SSH Port
       local_action: wait_for port={{ custom_ssh_port }} timeout=5 host={{inventory_hostname}}
-      register: high_ssh
+      register: custom_ssh
       when: default_ssh.elapsed >= 5
       ignore_errors: true
       failed_when: false
 
     - name: Set ansible_ssh_port To Custom
       set_fact: ansible_ssh_port={{ custom_ssh_port }}
-      when: default_ssh.elapsed >= 5 and high_ssh.elapsed < 5
+      when: default_ssh.elapsed >= 5 and custom_ssh.elapsed < 5
