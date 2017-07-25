@@ -1,3 +1,9 @@
+# need to configure one of two options:
+#   - installing 7 uninstalls 5 and vice versa
+#       - easier => just requires state: absent
+#   - installing 7 keeps 5 if present and vice versa
+#       - harder => requires check for php-fpm installation and stopping the service
+#         if present
 ---
  - name: Get PHP Repository
    yum:
@@ -36,18 +42,6 @@
     owner: root
     group: root
     mode: 0644
-
- - name: Stop PHP 7 FPM
-   service:
-    name: php70-php-fpm
-    state: stopped
-   when: php_version == 5
-
- - name: Stop PHP 5 FPM
-   service:
-    name: php55-php-fpm
-    state: stopped
-   when: php_version == 7
 
  - name: Start PHP 7 FPM
    service:

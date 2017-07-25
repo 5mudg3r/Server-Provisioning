@@ -1,3 +1,5 @@
+# currently doesn't use desired sshd_config file as this file prevents ansible ssh
+# access (though allows normal ssh access)
 ---
  - name: Update SSH Config
    template:
