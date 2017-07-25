@@ -16,6 +16,7 @@
    with_items:
     - php70
     - php70-php-mysqlnd
+    - php70-php-fpm
    when: php_version == 7
 
  - name: Install PHP 5
@@ -25,6 +26,7 @@
    with_items:
     - php55
     - php55-php-mysqlnd
+    - php55-php-fpm
    when: php_version == 5
 
  - name: Replace PHP Config File
@@ -34,3 +36,39 @@
     owner: root
     group: root
     mode: 0644
+
+ - name: Stop PHP 7 FPM
+   service:
+    name: php70-php-fpm
+    state: stopped
+   when: php_version == 5
+
+ - name: Stop PHP 5 FPM
+   service:
+    name: php55-php-fpm
+    state: stopped
+   when: php_version == 7
+
+ - name: Start PHP 7 FPM
+   service:
+    name: php70-php-fpm
+    state: started
+   when: php_version == 7
+
+ - name: Enable PHP 7 FPM On Boot
+   service:
+    name: php70-php-fpm
+    enabled: yes
+   when: php_version == 7
+
+ - name: Start PHP 5 FPM
+   service:
+    name: php55-php-fpm
+    state: started
+   when: php_version == 5
+
+ - name: Enable PHP 5 FPM On Boot
+   service:
+    name: php55-php-fpm
+    enabled: yes
+   when: php_version == 5
